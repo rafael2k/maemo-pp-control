@@ -16,7 +16,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street,
  * Boston, MA 02110-1301, USA.
  *
- * Rhizo-dialer is an experimental dialer for Maemo.
+ * A single button app to suspend the system.
  *
  */
 
