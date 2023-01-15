@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Name=Suspend
+Comment=Rafael's Suspend
+Exec=maemo-suspend
+Icon=suspend
+Type=Application
+# Categories=Telephony;
+X-HildonDesk-ShowInToolbar=true
+X-Osso-Service=maemo-suspend
+X-Osso-Type=application/x-executable
