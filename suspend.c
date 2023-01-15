@@ -55,7 +55,7 @@ void sig_handler(int sig_num)
 void callback_button_pressed(GtkWidget * widget, char nothing)
 {
 
-    system("echo mem > /sys/power/state");
+    system("sudo sh -c 'echo mem > /sys/power/state'");
 
 }
 
