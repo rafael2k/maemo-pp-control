@@ -61,12 +61,12 @@ int main(int argc, char *argv[])
 {
     if (argc > 1){
         fprintf(stderr, "Usage: %s\n", argv[0]);
-        fprintf(stderr, "Usage example: %s\n");
+        fprintf(stderr, "Usage example: %s\n", argv[0]);
         return EXIT_SUCCESS;
     }
 
     if (!gtk_init_check (&argc, &argv)) {
-        log_message(LOG_FILE,"Display cannot be initialized, wait for the curses interface :-P\n");
+        printf(stderr, "Display cannot be initialized, wait for the curses interface :-P\n");
         exit (EXIT_FAILURE);
     }
 
