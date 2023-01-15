@@ -7,6 +7,3 @@ Exec=/usr/bin/maemo-suspend
 Icon=suspend
 Type=Application
 Categories=System;
-X-HildonDesk-ShowInToolbar=true
-X-Osso-Service=maemo-suspend
-X-Osso-Type=application/x-executable
