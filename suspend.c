@@ -83,25 +83,6 @@ int main(int argc, char *argv[])
 
     hildon_gtk_window_set_portrait_flags(GTK_WINDOW(window), HILDON_PORTRAIT_MODE_SUPPORT); // or HILDON_PORTRAIT_MODE_SUPPORT  ?
 
-    // TODO: Use Hildon widgets!
-    // http://maemo.org/api_refs/5.0/5.0-final/hildon/
-    /* Create buttons and add it to main view */
-    vbox = gtk_vbox_new(TRUE, 5);
-    hbox0 = gtk_table_new(1, 3, FALSE);
-    hbox1 = gtk_hbox_new(TRUE, 5);
-    hbox2 = gtk_hbox_new(TRUE, 5);
-    hbox3 = gtk_hbox_new(TRUE, 5);
-    hbox4 = gtk_hbox_new(TRUE, 5);
-    hbox5 = gtk_hbox_new(TRUE, 5);
-
-    display = hildon_entry_new (HILDON_SIZE_AUTO);
-    gtk_entry_set_alignment (GTK_ENTRY(display), 0.5);
-    gtk_editable_set_editable (GTK_EDITABLE (display), TRUE); // may be this should be false?
-
-    button9 = gtk_button_new_with_label("9");
-//    button9 = hildon_gtk_button_new(HILDON_SIZE_AUTO);
-// hildon_gtk_button_new (HILDON_SIZE_FINGER_HEIGHT | HILDON_SIZE_AUTO_WIDTH);
-// gtk_button_set_label (GTK_BUTTON (button9), "9"); // ?
     button = gtk_button_new_with_label("SUSPEND");
 
     g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(callback_button_pressed), (void *) NULL);
