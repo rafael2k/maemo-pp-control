@@ -1,12 +1,12 @@
 CC=gcc
-LIBRARIES=gconf-2.0 hildon-1 gtk+-2.0 libosso gdk-2.0 gconf-2.0 glib-2.0
+LIBRARIES=hildon-1 gconf-2.0 gtk+-2.0 glib-2.0 x11
 CFLAGS= -Wall -std=gnu17 -g `pkg-config --cflags $(LIBRARIES)`
 LDFLAGS=`pkg-config --libs $(LIBRARIES)` -lm
 
 all: suspend
 
 suspend: suspend.o
-	$(CC) $(LDFLAGS) suspend.o -o suspend
+	$(CC) suspend.o -o suspend -fPIC $(LDFLAGS)
 
 suspend.o: suspend.c
 	$(CC) $(CFLAGS) -c -o suspend.o suspend.c
