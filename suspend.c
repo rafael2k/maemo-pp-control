@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
     }
 
     if (!gtk_init_check (&argc, &argv)) {
-        printf(stderr, "Display cannot be initialized, wait for the curses interface :-P\n");
+        fprintf(stderr, "Display cannot be initialized, wait for the curses interface :-P\n");
         exit (EXIT_FAILURE);
     }
 
