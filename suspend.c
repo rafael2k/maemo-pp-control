@@ -85,7 +85,9 @@ int main(int argc, char *argv[])
 
     hildon_gtk_window_set_portrait_flags(GTK_WINDOW(window), HILDON_PORTRAIT_MODE_SUPPORT); // or HILDON_PORTRAIT_MODE_SUPPORT  ?
 
-    button = gtk_button_new_with_label("SUSPEND");
+    button = hildon_gtk_button_new(HILDON_SIZE_THUMB_HEIGHT);
+    gtk_button_set_label (GTK_BUTTON(buttonBack),"SUSPEND");
+
 
     g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(callback_button_pressed), (void *) NULL);
 
