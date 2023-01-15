@@ -30,10 +30,12 @@
 #include <signal.h>
 #include <threads.h>
 
+#include <gtk/gtk.h>
+
 #include <hildon/hildon-banner.h>
 #include <hildon/hildon-program.h>
 #include <hildon/hildon.h>
-#include <gtk/gtk.h>
+
 
 
 /* Hildon/GTK stuff */
