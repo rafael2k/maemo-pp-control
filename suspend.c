@@ -69,7 +69,7 @@ void callback_button_pressed(gpointer data)
 }
 
 
-void battery_update(gpointer data)
+gboolean battery_update(gpointer data)
 {
     GtkEntry *label = (GtkEntry*)data;
     char buf[256];
