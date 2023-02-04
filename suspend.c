@@ -63,15 +63,13 @@ void sig_handler(int sig_num)
     }
 }
 
-// upower -i /org/freedesktop/UPower/devices/battery_axp20x_battery | grep percentage | cut -d "%" -f 1 | cut -d ":" -f 2 | xargs
-
-void callback_button_pressed(GtkWidget * widget, char nothing)
+void callback_button_pressed(gpointer data)
 {
     system("sudo sh -c 'echo mem > /sys/power/state'");
 }
 
 
-gboolean battery_update(gpointer data)
+void battery_update(gpointer data)
 {
     GtkEntry *label = (GtkEntry*)data;
     char buf[256];
@@ -85,17 +83,17 @@ gboolean battery_update(gpointer data)
     return TRUE;
 }
 
-gboolean enable_flashligth(gpointer data)
+void enable_flashligth(gpointer data)
 {
     system("echo 1 > /sys/class/leds/white:flash/brightness");
 }
 
-gboolean disable_flashligth(gpointer data)
+void disable_flashligth(gpointer data)
 {
     system("echo 0 > /sys/class/leds/white:flash/brightness");
 }
 
-gboolean trigger_strobe(gpointer data)
+void trigger_strobe(gpointer data)
 {
     system("echo 1 > /sys/class/leds/white:flash/flash_strobe");
 }
@@ -164,6 +162,8 @@ int main(int argc, char *argv[])
     g_signal_connect(G_OBJECT(button_lights_on), "clicked", G_CALLBACK(enable_flashligth), (void *) NULL);
 
     g_signal_connect(G_OBJECT(button_lights_off), "clicked", G_CALLBACK(disable_flashligth), (void *) NULL);
+
+    g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(callback_button_pressed), (void *) NULL);
 
     gtk_container_add(GTK_CONTAINER(window), vbox);
 
