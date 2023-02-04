@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
     // start camera focus
     // stop camera focus
     // battery level & kbd battery level
-    battery_display = hildon_entry_new (HILDON_SIZE_AUTO);
+    battery_display = hildon_entry_new (HILDON_SIZE_FINGER_HEIGHT);
     gtk_entry_set_alignment (GTK_ENTRY(battery_display), 0.5);
     gtk_editable_set_editable (GTK_EDITABLE (battery_display), FALSE); // may be this should be false?
 
