@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
 
     g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(callback_button_pressed), (void *) NULL);
 
-    gtk_container_add(GTK_CONTAINER(window), button);
+    gtk_container_add(GTK_CONTAINER(window), vbox);
 
     /* Connect signal to X in the upper corner */
     g_signal_connect(G_OBJECT(window), "delete_event", G_CALLBACK(gtk_main_quit), NULL);
