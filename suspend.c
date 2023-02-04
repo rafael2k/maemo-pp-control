@@ -60,11 +60,28 @@ void sig_handler(int sig_num)
     }
 }
 
+// upower -i /org/freedesktop/UPower/devices/battery_axp20x_battery | grep percentage | cut -d "%" -f 1 | cut -d ":" -f 2 | xargs
+
 void callback_button_pressed(GtkWidget * widget, char nothing)
 {
 
     system("sudo sh -c 'echo mem > /sys/power/state'");
 
+}
+
+
+gboolean battery_update(gpointer data)
+{
+    GtkLabel *label = (GtkEntry*)data;
+    char buf[256];
+    memset(&buf, 0x0, 256);
+    int battery_level = 0;
+    FILE *battery_fp = popen("upower -i /org/freedesktop/UPower/devices/battery_axp20x_battery | grep percentage | cut -d "%" -f 1 | cut -d ":" -f 2 | xargs", "r");
+    fscanf(battery_fp, "%d", &battery_level);
+    pclose(battery_fp);
+    sprintf(buf, "%d %", bettery_level)
+    gtk_entry_set_text (label, buf);
+    return TRUE;
 }
 
 int main(int argc, char *argv[])
@@ -123,6 +140,8 @@ int main(int argc, char *argv[])
 
     /* Begin the main application */
     gtk_widget_show_all(GTK_WIDGET(window));
+
+    g_timeout_add_seconds(2, battery_update, battery_display);
 
     gtk_main();
 
