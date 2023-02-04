@@ -140,8 +140,11 @@ int main(int argc, char *argv[])
 
     battery_label = gtk_label_new("Battery Level:");
 
-    button_lights_on = gtk_button_set_label (GTK_BUTTON(button),"TORCH ON");
-    button_lights_off = gtk_button_set_label (GTK_BUTTON(button),"TORCH OFF");
+    button_lights_on = hildon_gtk_button_new(HILDON_SIZE_FINGER_HEIGHT);
+    button_lights_off = hildon_gtk_button_new(HILDON_SIZE_FINGER_HEIGHT);
+
+    gtk_button_set_label (GTK_BUTTON(button),"TORCH ON");
+    gtk_button_set_label (GTK_BUTTON(button),"TORCH OFF");
 
 
     vbox = gtk_vbox_new(TRUE, 3);
@@ -158,7 +161,9 @@ int main(int argc, char *argv[])
     gtk_container_add(GTK_CONTAINER(vbox), hbox0);
     gtk_container_add(GTK_CONTAINER(vbox), hbox1);
 
-    g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(callback_button_pressed), (void *) NULL);
+    g_signal_connect(G_OBJECT(button_lights_on), "clicked", G_CALLBACK(enable_flashligth), (void *) NULL);
+
+    g_signal_connect(G_OBJECT(button_lights_off), "clicked", G_CALLBACK(disable_flashligth), (void *) NULL);
 
     gtk_container_add(GTK_CONTAINER(window), vbox);
 
