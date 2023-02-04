@@ -42,6 +42,8 @@
 HildonProgram *program;
 HildonWindow *window;
 GtkWidget *button;
+GtkWidget *button_lights_on;
+GtkWidget *button_lights_off;
 
 
 /* Create buttons and add it to main view */
@@ -49,6 +51,7 @@ GtkWidget *battery_display;
 GtkWidget *battery_label;
 
 GtkWidget *vbox;
+GtkWidget *hbox0;
 GtkWidget *hbox1;
 
 void sig_handler(int sig_num)
@@ -64,9 +67,7 @@ void sig_handler(int sig_num)
 
 void callback_button_pressed(GtkWidget * widget, char nothing)
 {
-
     system("sudo sh -c 'echo mem > /sys/power/state'");
-
 }
 
 
@@ -83,6 +84,22 @@ gboolean battery_update(gpointer data)
     gtk_entry_set_text (label, buf);
     return TRUE;
 }
+
+gboolean enable_flashligth(gpointer data)
+{
+    system("echo 1 > /sys/class/leds/white:flash/brightness");
+}
+
+gboolean disable_flashligth(gpointer data)
+{
+    system("echo 0 > /sys/class/leds/white:flash/brightness");
+}
+
+gboolean trigger_strobe(gpointer data)
+{
+    system("echo 1 > /sys/class/leds/white:flash/flash_strobe");
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -123,12 +140,22 @@ int main(int argc, char *argv[])
 
     battery_label = gtk_label_new("Battery Level:");
 
-    vbox = gtk_vbox_new(TRUE, 2);
+    button_lights_on = gtk_button_set_label (GTK_BUTTON(button),"TORCH ON");
+    button_lights_off = gtk_button_set_label (GTK_BUTTON(button),"TORCH OFF");
+
+
+    vbox = gtk_vbox_new(TRUE, 3);
+    hbox0 = gtk_hbox_new(TRUE, 5);
     hbox1 = gtk_hbox_new(TRUE, 5);
+
+    gtk_container_add(GTK_CONTAINER(hbox0), button_lights_on);
+    gtk_container_add(GTK_CONTAINER(hbox0), button_lights_off);
+
     gtk_container_add(GTK_CONTAINER(hbox1), battery_label);
     gtk_container_add(GTK_CONTAINER(hbox1), battery_display);
 
     gtk_container_add(GTK_CONTAINER(vbox), button);
+    gtk_container_add(GTK_CONTAINER(vbox), hbox0);
     gtk_container_add(GTK_CONTAINER(vbox), hbox1);
 
     g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(callback_button_pressed), (void *) NULL);
@@ -141,7 +168,7 @@ int main(int argc, char *argv[])
     /* Begin the main application */
     gtk_widget_show_all(GTK_WIDGET(window));
 
-    g_timeout_add_seconds(2, battery_update, battery_display);
+    g_timeout_add_seconds(3, battery_update, battery_display);
 
     gtk_main();
 
