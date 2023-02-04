@@ -140,11 +140,11 @@ int main(int argc, char *argv[])
 
     battery_label = gtk_label_new("Battery Level:");
 
-    button_lights_on = hildon_gtk_button_new(HILDON_SIZE_FINGER_HEIGHT);
-    button_lights_off = hildon_gtk_button_new(HILDON_SIZE_FINGER_HEIGHT);
+    button_lights_on = hildon_gtk_button_new(HILDON_SIZE_AUTO_HEIGHT);
+    button_lights_off = hildon_gtk_button_new(HILDON_SIZE_AUTO_HEIGHT);
 
-    gtk_button_set_label (GTK_BUTTON(button),"TORCH ON");
-    gtk_button_set_label (GTK_BUTTON(button),"TORCH OFF");
+    gtk_button_set_label (GTK_BUTTON(button_lights_on),"TORCH ON");
+    gtk_button_set_label (GTK_BUTTON(button_lights_off),"TORCH OFF");
 
 
     vbox = gtk_vbox_new(TRUE, 3);
