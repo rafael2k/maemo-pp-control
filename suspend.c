@@ -72,11 +72,11 @@ void callback_button_pressed(GtkWidget * widget, char nothing)
 
 gboolean battery_update(gpointer data)
 {
-    GtkLabel *label = (GtkEntry*)data;
+    GtkEntry *label = (GtkEntry*)data;
     char buf[256];
     memset(&buf, 0x0, 256);
     int battery_level = 0;
-    FILE *battery_fp = popen("upower -i /org/freedesktop/UPower/devices/battery_axp20x_battery | grep percentage | cut -d "%" -f 1 | cut -d ":" -f 2 | xargs", "r");
+    FILE *battery_fp = popen("upower -i /org/freedesktop/UPower/devices/battery_axp20x_battery | grep percentage | cut -d \"%\" -f 1 | cut -d \":\" -f 2 | xargs", "r");
     fscanf(battery_fp, "%d", &battery_level);
     pclose(battery_fp);
     sprintf(buf, "%d %", bettery_level)
