@@ -79,7 +79,7 @@ gboolean battery_update(gpointer data)
     FILE *battery_fp = popen("upower -i /org/freedesktop/UPower/devices/battery_axp20x_battery | grep percentage | cut -d \"%\" -f 1 | cut -d \":\" -f 2 | xargs", "r");
     fscanf(battery_fp, "%d", &battery_level);
     pclose(battery_fp);
-    sprintf(buf, "%d %", battery_level);
+    sprintf(buf, "%d %%", battery_level);
     gtk_entry_set_text (label, buf);
     return TRUE;
 }
