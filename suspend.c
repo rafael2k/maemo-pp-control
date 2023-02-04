@@ -43,6 +43,14 @@ HildonProgram *program;
 HildonWindow *window;
 GtkWidget *button;
 
+
+/* Create buttons and add it to main view */
+GtkWidget *battery_display;
+GtkWidget *battery_label;
+
+GtkWidget *vbox;
+GtkWidget *hbox1;
+
 void sig_handler(int sig_num)
 {
 
@@ -88,6 +96,23 @@ int main(int argc, char *argv[])
     button = hildon_gtk_button_new(HILDON_SIZE_AUTO_HEIGHT);
     gtk_button_set_label (GTK_BUTTON(button),"SUSPEND");
 
+    // set powersave / set schedutil (normal)
+    // start camera focus
+    // stop camera focus
+    // battery level & kbd battery level
+    battery_display = hildon_entry_new (HILDON_SIZE_AUTO);
+    gtk_entry_set_alignment (GTK_ENTRY(battery_display), 0.5);
+    gtk_editable_set_editable (GTK_EDITABLE (battery_display), FALSE); // may be this should be false?
+
+    battery_label = gtk_label_new("Battery Level:");
+
+    vbox = gtk_vbox_new(TRUE, 2);
+    hbox1 = gtk_hbox_new(TRUE, 5);
+    gtk_container_add(GTK_CONTAINER(hbox1), battery_label);
+    gtk_container_add(GTK_CONTAINER(hbox1), battery_display);
+
+    gtk_container_add(GTK_CONTAINER(vbox), button);
+    gtk_container_add(GTK_CONTAINER(vbox), hbox1);
 
     g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(callback_button_pressed), (void *) NULL);
 
