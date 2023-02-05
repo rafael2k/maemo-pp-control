@@ -44,6 +44,8 @@ HildonWindow *window;
 GtkWidget *button;
 GtkWidget *button_lights_on;
 GtkWidget *button_lights_off;
+GtkWidget *button_low_consumption;
+GtkWidget *button_normal_consumption;
 
 
 /* Create buttons and add it to main view */
@@ -53,6 +55,7 @@ GtkWidget *battery_label;
 GtkWidget *vbox;
 GtkWidget *hbox0;
 GtkWidget *hbox1;
+GtkWidget *hbox2;
 
 void sig_handler(int sig_num)
 {
@@ -91,6 +94,22 @@ void enable_flashligth(gpointer data)
 void disable_flashligth(gpointer data)
 {
     system("echo 0 > /sys/class/leds/white:flash/brightness");
+}
+
+void sched_powersave(gpointer data)
+{
+    system("sudo sh -c 'echo powersave > /sys/bus/cpu/devices/cpu0/cpufreq/scaling_governor'");
+    system("sudo sh -c 'echo powersave > /sys/bus/cpu/devices/cpu1/cpufreq/scaling_governor'");
+    system("sudo sh -c 'echo powersave > /sys/bus/cpu/devices/cpu2/cpufreq/scaling_governor'");
+    system("sudo sh -c 'echo powersave > /sys/bus/cpu/devices/cpu3/cpufreq/scaling_governor'");
+}
+
+void sched_schedutil(gpointer data)
+{
+    system("sudo sh -c 'echo schedutil > /sys/bus/cpu/devices/cpu0/cpufreq/scaling_governor'");
+    system("sudo sh -c 'echo schedutil > /sys/bus/cpu/devices/cpu1/cpufreq/scaling_governor'");
+    system("sudo sh -c 'echo schedutil > /sys/bus/cpu/devices/cpu2/cpufreq/scaling_governor'");
+    system("sudo sh -c 'echo schedutil > /sys/bus/cpu/devices/cpu3/cpufreq/scaling_governor'");
 }
 
 void trigger_strobe(gpointer data)
@@ -140,6 +159,8 @@ int main(int argc, char *argv[])
 
     button_lights_on = hildon_gtk_button_new(HILDON_SIZE_AUTO_HEIGHT);
     button_lights_off = hildon_gtk_button_new(HILDON_SIZE_AUTO_HEIGHT);
+    button_low_consumption = hildon_gtk_button_new(HILDON_SIZE_AUTO_HEIGHT);
+    button_normal_consumption = hildon_gtk_button_new(HILDON_SIZE_AUTO_HEIGHT);
 
     gtk_button_set_label (GTK_BUTTON(button_lights_on),"TORCH ON");
     gtk_button_set_label (GTK_BUTTON(button_lights_off),"TORCH OFF");
@@ -148,20 +169,29 @@ int main(int argc, char *argv[])
     vbox = gtk_vbox_new(TRUE, 3);
     hbox0 = gtk_hbox_new(TRUE, 5);
     hbox1 = gtk_hbox_new(TRUE, 5);
+    hbox2 = gtk_hbox_new(TRUE, 5);
 
     gtk_container_add(GTK_CONTAINER(hbox0), button_lights_on);
     gtk_container_add(GTK_CONTAINER(hbox0), button_lights_off);
 
-    gtk_container_add(GTK_CONTAINER(hbox1), battery_label);
-    gtk_container_add(GTK_CONTAINER(hbox1), battery_display);
+    gtk_container_add(GTK_CONTAINER(hbox1), button_low_consumption);
+    gtk_container_add(GTK_CONTAINER(hbox1), button_normal_consumption);
+
+    gtk_container_add(GTK_CONTAINER(hbox2), battery_label);
+    gtk_container_add(GTK_CONTAINER(hbox2), battery_display);
 
     gtk_container_add(GTK_CONTAINER(vbox), button);
     gtk_container_add(GTK_CONTAINER(vbox), hbox0);
     gtk_container_add(GTK_CONTAINER(vbox), hbox1);
+    gtk_container_add(GTK_CONTAINER(vbox), hbox2);
 
     g_signal_connect(G_OBJECT(button_lights_on), "clicked", G_CALLBACK(enable_flashligth), (void *) NULL);
 
     g_signal_connect(G_OBJECT(button_lights_off), "clicked", G_CALLBACK(disable_flashligth), (void *) NULL);
+
+    g_signal_connect(G_OBJECT(button_low_consumption), "clicked", G_CALLBACK(sched_powersave), (void *) NULL);
+
+    g_signal_connect(G_OBJECT(button_normal_consumption), "clicked", G_CALLBACK(sched_schedutil), (void *) NULL);
 
     g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(callback_button_pressed), (void *) NULL);
 
