@@ -165,6 +165,8 @@ int main(int argc, char *argv[])
     gtk_button_set_label (GTK_BUTTON(button_lights_on),"TORCH ON");
     gtk_button_set_label (GTK_BUTTON(button_lights_off),"TORCH OFF");
 
+    gtk_button_set_label (GTK_BUTTON(button_low_consumption),"POWER SAVING");
+    gtk_button_set_label (GTK_BUTTON(button_normal_consumption),"POWER NORMAL");
 
     vbox = gtk_vbox_new(TRUE, 3);
     hbox0 = gtk_hbox_new(TRUE, 5);
