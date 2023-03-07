@@ -234,6 +234,9 @@ int main(int argc, char *argv[])
     /* Begin the main application */
     gtk_widget_show_all(GTK_WIDGET(window));
 
+    battery_update((gpointer) battery_display);
+    kbd_update((gpointer) kbd_display);
+
     g_timeout_add_seconds(3, battery_update, battery_display);
 
     g_timeout_add_seconds(3, kbd_update, kbd_display);
