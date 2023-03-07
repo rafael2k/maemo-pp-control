@@ -13,7 +13,7 @@ maemo-pp-control.o: maemo-pp-control.c
 
 install: maemo-pp-control
 	install -d /usr/bin
-	install maemo-pp-control /usr/bin/maemo--pp-control
+	install maemo-pp-control /usr/bin/maemo-pp-control
 	install -d /usr/share/icons/
 	install maemo-pp-control.png /usr/share/icons/
 	install -d /usr/share/applications/hildon/
