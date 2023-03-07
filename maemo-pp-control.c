@@ -81,11 +81,14 @@ gboolean battery_update(gpointer data)
     GtkEntry *label = (GtkEntry*)data;
     char buf[256];
     memset(&buf, 0x0, 256);
-    int battery_level = 0;
+    int battery_level = -1;
     FILE *battery_fp = popen("upower -i /org/freedesktop/UPower/devices/battery_axp20x_battery | grep percentage | cut -d \"%\" -f 1 | cut -d \":\" -f 2 | xargs", "r");
     fscanf(battery_fp, "%d", &battery_level);
     pclose(battery_fp);
-    sprintf(buf, "%d %%", battery_level);
+    if (battery_level == -1)
+        sprintf(buf, "NOT FOUND", battery_level);
+    else
+        sprintf(buf, "%d %%", battery_level);
     gtk_entry_set_text (label, buf);
     return TRUE;
 }
@@ -95,11 +98,14 @@ gboolean kbd_update(gpointer data)
     GtkEntry *label = (GtkEntry*)data;
     char buf[256];
     memset(&buf, 0x0, 256);
-    int battery_level = 0;
+    int battery_level = -1;
     FILE *battery_fp = popen("upower -i /org/freedesktop/UPower/devices/battery_ip5xxx_battery | grep percentage | cut -d \"%\" -f 1 | cut -d \":\" -f 2 | xargs", "r");
     fscanf(battery_fp, "%d", &battery_level);
     pclose(battery_fp);
-    sprintf(buf, "%d %%", battery_level);
+    if (battery_level == -1)
+        sprintf(buf, "NOT FOUND", battery_level);
+    else
+        sprintf(buf, "%d %%", battery_level);
     gtk_entry_set_text (label, buf);
     return TRUE;
 }
