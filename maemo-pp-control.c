@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
 
     /* Create the hildon program and setup the title */
     program = HILDON_PROGRAM(hildon_program_get_instance());
-    g_set_application_name("Maemo Suspend");
+    g_set_application_name("Maemo PinePhone Control");
 
     /* Create HildonWindow and set it to HildonProgram */
     window = HILDON_WINDOW(hildon_window_new());
