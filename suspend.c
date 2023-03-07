@@ -52,10 +52,14 @@ GtkWidget *button_normal_consumption;
 GtkWidget *battery_display;
 GtkWidget *battery_label;
 
+GtkWidget *kbd_display;
+GtkWidget *kbd_label;
+
 GtkWidget *vbox;
 GtkWidget *hbox0;
 GtkWidget *hbox1;
 GtkWidget *hbox2;
+GtkWidget *hbox3;
 
 void sig_handler(int sig_num)
 {
@@ -79,6 +83,20 @@ gboolean battery_update(gpointer data)
     memset(&buf, 0x0, 256);
     int battery_level = 0;
     FILE *battery_fp = popen("upower -i /org/freedesktop/UPower/devices/battery_axp20x_battery | grep percentage | cut -d \"%\" -f 1 | cut -d \":\" -f 2 | xargs", "r");
+    fscanf(battery_fp, "%d", &battery_level);
+    pclose(battery_fp);
+    sprintf(buf, "%d %%", battery_level);
+    gtk_entry_set_text (label, buf);
+    return TRUE;
+}
+
+gboolean kbd_update(gpointer data)
+{
+    GtkEntry *label = (GtkEntry*)data;
+    char buf[256];
+    memset(&buf, 0x0, 256);
+    int battery_level = 0;
+    FILE *battery_fp = popen("upower -i /org/freedesktop/UPower/devices/battery_ip5xxx_battery | grep percentage | cut -d \"%\" -f 1 | cut -d \":\" -f 2 | xargs", "r");
     fscanf(battery_fp, "%d", &battery_level);
     pclose(battery_fp);
     sprintf(buf, "%d %%", battery_level);
@@ -157,6 +175,12 @@ int main(int argc, char *argv[])
 
     battery_label = gtk_label_new("Battery Level:");
 
+    kbd_display = hildon_entry_new (HILDON_SIZE_FINGER_HEIGHT);
+    gtk_entry_set_alignment (GTK_ENTRY(kbd_display), 0.5);
+    gtk_editable_set_editable (GTK_EDITABLE (kbd_display), FALSE); // may be this should be false?
+
+    kbd_label = gtk_label_new("Keyboard Battery Level:");
+
     button_lights_on = hildon_gtk_button_new(HILDON_SIZE_AUTO_HEIGHT);
     button_lights_off = hildon_gtk_button_new(HILDON_SIZE_AUTO_HEIGHT);
     button_low_consumption = hildon_gtk_button_new(HILDON_SIZE_AUTO_HEIGHT);
@@ -172,6 +196,7 @@ int main(int argc, char *argv[])
     hbox0 = gtk_hbox_new(TRUE, 5);
     hbox1 = gtk_hbox_new(TRUE, 5);
     hbox2 = gtk_hbox_new(TRUE, 5);
+    hbox3 = gtk_hbox_new(TRUE, 5);
 
     gtk_container_add(GTK_CONTAINER(hbox0), button_lights_on);
     gtk_container_add(GTK_CONTAINER(hbox0), button_lights_off);
@@ -182,10 +207,14 @@ int main(int argc, char *argv[])
     gtk_container_add(GTK_CONTAINER(hbox2), battery_label);
     gtk_container_add(GTK_CONTAINER(hbox2), battery_display);
 
+    gtk_container_add(GTK_CONTAINER(hbox3), kbd_label);
+    gtk_container_add(GTK_CONTAINER(hbox3), kbd_display);
+
     gtk_container_add(GTK_CONTAINER(vbox), button);
     gtk_container_add(GTK_CONTAINER(vbox), hbox0);
     gtk_container_add(GTK_CONTAINER(vbox), hbox1);
     gtk_container_add(GTK_CONTAINER(vbox), hbox2);
+    gtk_container_add(GTK_CONTAINER(vbox), hbox3);
 
     g_signal_connect(G_OBJECT(button_lights_on), "clicked", G_CALLBACK(enable_flashligth), (void *) NULL);
 
@@ -206,6 +235,8 @@ int main(int argc, char *argv[])
     gtk_widget_show_all(GTK_WIDGET(window));
 
     g_timeout_add_seconds(3, battery_update, battery_display);
+
+    g_timeout_add_seconds(3, kbd_update, kbd_display);
 
     gtk_main();
 
