@@ -1,9 +1,9 @@
 [Desktop Entry]
 Encoding=UTF-8
 Version=1.0
-Name=Suspend
+Name=PP Control
 Comment=Rafael's Suspend
-Exec=/usr/bin/maemo-suspend
-Icon=suspend
+Exec=/usr/bin/maemo-pp-control
+Icon=maemo-pp-control
 Type=Application
 Categories=System;

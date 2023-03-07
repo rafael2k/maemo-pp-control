@@ -3,21 +3,21 @@ LIBRARIES=hildon-1 gconf-2.0 gtk+-2.0 glib-2.0 x11
 CFLAGS= -Wall -std=gnu17 -g `pkg-config --cflags $(LIBRARIES)`
 LDFLAGS=`pkg-config --libs $(LIBRARIES)` -lm
 
-all: suspend
+all: maemo-pp-control
 
-suspend: suspend.o
-	$(CC) suspend.o -o suspend -fPIC $(LDFLAGS)
+maemo-pp-control: maemo-pp-control.o
+	$(CC) maemo-pp-control.o -o maemo-pp-control -fPIC $(LDFLAGS)
 
-suspend.o: suspend.c
-	$(CC) $(CFLAGS) -c -o suspend.o suspend.c
+maemo-pp-control.o: maemo-pp-control.c
+	$(CC) $(CFLAGS) -c -o maemo-pp-control.o maemo-pp-control.c
 
-install: suspend
+install: maemo-pp-control
 	install -d /usr/bin
-	install suspend /usr/bin/maemo-suspend
+	install maemo-pp-control /usr/bin/maemo-maemo-pp-control
 	install -d /usr/share/icons/
-	install suspend.png /usr/share/icons/
+	install maemo-pp-control.png /usr/share/icons/
 	install -d /usr/share/applications/hildon/
-	install suspend.desktop /usr/share/applications/hildon/
+	install maemo-pp-control.desktop /usr/share/applications/hildon/
 
 clean:
-	rm -f suspend.o suspend
+	rm -f maemo-pp-control.o maemo-pp-control
