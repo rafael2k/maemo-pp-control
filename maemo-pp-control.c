@@ -86,7 +86,7 @@ gboolean battery_update(gpointer data)
     fscanf(battery_fp, "%d", &battery_level);
     pclose(battery_fp);
     if (battery_level == -1)
-        sprintf(buf, "NOT FOUND", battery_level);
+        sprintf(buf, "NOT FOUND");
     else
         sprintf(buf, "%d %%", battery_level);
     gtk_entry_set_text (label, buf);
@@ -103,7 +103,7 @@ gboolean kbd_update(gpointer data)
     fscanf(battery_fp, "%d", &battery_level);
     pclose(battery_fp);
     if (battery_level == -1)
-        sprintf(buf, "NOT FOUND", battery_level);
+        sprintf(buf, "NOT FOUND");
     else
         sprintf(buf, "%d %%", battery_level);
     gtk_entry_set_text (label, buf);
